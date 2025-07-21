@@ -1,0 +1,15 @@
+[Unit]
+Description=Tailscale User Session Control
+Wants=network-online.target tailscaled.service
+After=network-online.target tailscaled.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/tailscale up --auth-key <insert-auth-key-here> --timeout=30s
+ExecStop=/usr/bin/tailscale down
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
